@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+	<title>South Park Hangman - OMG Don't Kill Kenny!</title>
+</head>
+<body>
+
+<p>Press any key to begin playing!</p>
+
+<div id="winsDisplay"><p>Wins:</p></div>
+<div id="currWordDisplay"><p>Current Word:</p></div>
+<div id="userGuessCountDisplay"><p>Guesses Left:</p></div>
+<div id="letterGuessDisplay"><p>Already Guessed:</p></div>
+
+<!-- MASTER P VIDEO
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cE1psVNPlx4" frameborder="0" allowfullscreen></iframe>
+-->
+
+<script type="text/javascript">
+	// Define variables
+	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Terrance & Phillip", "Timmy", "Randy Marsh"];
+	var currWord = [];
+	var wins = 0;
+	var userGuessCount = 12;
+	var userGuessLog = [];
+
+	// On page load, set Computer Guess equal to a random choice from the compChoice array.
+	var compGuess = compChoices[Math.floor(Math.random() * compChoices.length)];
+	console.log(compGuess);
+
+	// Break down compGuess into letters & display on screen
+	for (var i = 0; i < compGuess.length; i++) {
+		currWord.push(compGuess[i]);
+		}
+	
+
+	/// When the user presses a key, it will run the following function...
+	document.onkeyup = function (event) {
+
+		// Determine what the user has pressed
+		var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+		console.log(userGuess);
+		// Determine how we want to record the User's Guess. 
+		// If user selects a letter that is in the Computer's selected word, reveal that letter in currWordDisplay
+
+		// If use selects a letter not in Computer's selected word, place letter in letterGuessDisplay
+			for (var i = 0; i < 1; i++) {
+			userGuessLog.push(" " + userGuess[i]);
+			}
+
+
+
+
+		//html resets
+		var html1 = "<p>Wins: " + wins + "</p>";
+		document.querySelector("#winsDisplay").innerHTML = html1;
+
+		var html2 = "<p>Current Word: </p>" + currWord;
+		document.querySelector("#currWordDisplay").innerHTML = html2;
+
+		var html3 = "<p>Guesses Left: </p>" + userGuessCount;
+		document.querySelector("#userGuessCountDisplay").innerHTML = html3;
+
+		var html4 = "<p>Already Guessed: </p>" + userGuessLog;
+		document.querySelector("#letterGuessDisplay").innerHTML = html4;
+
+	}
+
+</script>
+
+
+
+</body>
+</html>
