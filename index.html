@@ -3,15 +3,40 @@
   <head>
     <meta charset="UTF-8">
 	<title>South Park Hangman - OMG Don't Kill Kenny!</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
 <body>
 
-<p>Press any key to begin playing!</p>
+<div class="container">
+	<h1>South Park Hangman</h1>
+	<h2>(aka don't kill Kenny)</h2>
+	
+	<div id="intro">
+		<p>Press any key to begin!</p>
+	</div>
 
-<div id="winsDisplay"><p>Wins:</p></div>
-<div id="currWordDisplay"><p>Current Word:</p></div>
-<div id="userGuessCountDisplay"><p>Guesses Left:</p></div>
-<div id="letterGuessDisplay"><p>Already Guessed:</p></div>
+	<div id="game">
+
+		<div id="winDiv">
+			<h4>Wins:</h4> 
+			<p id="winP"></p>
+		</div>
+		<div id="currWordContainer">
+			<h4>Current Word:</h4>
+			<ul id="currWordDisplay"></ul>
+		</div>
+		<div id="guessesLeftDiv">
+			<h4>Guesses Left:</h4>
+			<p id="guessesLeftP"></p>
+			</div>
+		<div id="lettersGuessedDiv">
+			<h4>Your guesses so far:</h4>
+			<p id="lettersGuessedP"></p>
+		</div>
+	</div>
+</div>
 
 <!-- MASTER P VIDEO
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cE1psVNPlx4" frameborder="0" allowfullscreen></iframe>
@@ -19,52 +44,83 @@
 
 <script type="text/javascript">
 	// Define variables
-	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Terrance & Phillip", "Timmy", "Randy Marsh"];
+	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Timmy"];
 	var currWord = [];
 	var wins = 0;
 	var userGuessCount = 12;
-	var userGuessLog = [];
+	var userChoice = [];
 
 	// On page load, set Computer Guess equal to a random choice from the compChoice array.
 	var compGuess = compChoices[Math.floor(Math.random() * compChoices.length)];
 	console.log(compGuess);
 
 	// Break down compGuess into letters & display on screen
-	for (var i = 0; i < compGuess.length; i++) {
-		currWord.push(compGuess[i]);
+	var currWord = compGuess.split("");
+	console.log(currWord);
+	
+	// Display compGuess letters in a horizontal line without commas
+	var currWordDivGet = document.getElementById("currWordDisplay");
+	console.log(currWordDivGet)
+
+		for (var i = 0; i < currWord.length; i++) {
+
+			var newElement = document.createElement("li");
+
+			newElement.innerHTML = currWord[i];
+
+			currWordDivGet.appendChild(newElement)
 		}
 	
+	// Hide compGuess letters until guessed by user
 
-	/// When the user presses a key, it will run the following function...
+
+	// Define what happens when the user presses a key
 	document.onkeyup = function (event) {
-
-		// Determine what the user has pressed
-		var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+	// Record key stroke pressed by user & convert to lower case
+		var userGuess = event.key.toUpperCase();
 		console.log(userGuess);
-		// Determine how we want to record the User's Guess. 
-		// If user selects a letter that is in the Computer's selected word, reveal that letter in currWordDisplay
+		console.log(event);
 
-		// If use selects a letter not in Computer's selected word, place letter in letterGuessDisplay
-			for (var i = 0; i < 1; i++) {
-			userGuessLog.push(" " + userGuess[i]);
+	// Process key stroke from user to affect certain actions 
+	//if key pressed = a-z/A-Z && if key hasn't been pressed yet....
+		for (userChoice.indexOf(userGuess) === -1) {
+			if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123)) {	
+				// show each key pressed (as upper case letter) as userChoice in #game element
+				userChoice.push(userGuess);
+				console.log(userChoice);
+				console.log(currWord.indexOf(userGuess));
+
 			}
 
 
+			// if userGuess and compGuess match: 1) Decrease guesses left by 1; 2) Show letter on currWord
+			if (currWord.indexOf(userGuess) !== -1) {
+				// Decrease guesses left by 1
+				userGuessCount--;
+				console.log(userGuessCount);
+				//Show letter on screen in Current Word Section, in the correct location			
+
+			// if userGuess and compGuess don't match: 1) Decrease Guess Count by 1; 2)  List as letter guessed
+			} else if (currWord.indexOf(userGuess) === -1) {
+				// Decrease guesses left by 1
+				userGuessCount--;
+				console.log(userGuessCount);
+				//List as a letter guessed 
+				document.querySelector("#lettersGuessedP").innerHTML = userChoice;
+			}
+			// When all letters are revealed, 1) Increase wins by 1; 2) Reset Guess Count to 12; 3) Reset Letters Guessed to (blank)
+			if (userGuessCount === 0) {
+				wins++;
+				userGuessCount = 12;
+				userChoice = [];
+			}
 
 
-		//html resets
-		var html1 = "<p>Wins: " + wins + "</p>";
-		document.querySelector("#winsDisplay").innerHTML = html1;
+			//html resets
+			document.querySelector("#winP").innerHTML = wins;
+			document.querySelector("#guessesLeftP").innerHTML = userGuessCount;
 
-		var html2 = "<p>Current Word: </p>" + currWord;
-		document.querySelector("#currWordDisplay").innerHTML = html2;
-
-		var html3 = "<p>Guesses Left: </p>" + userGuessCount;
-		document.querySelector("#userGuessCountDisplay").innerHTML = html3;
-
-		var html4 = "<p>Already Guessed: </p>" + userGuessLog;
-		document.querySelector("#letterGuessDisplay").innerHTML = html4;
-
+		}
 	}
 
 </script>
