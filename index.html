@@ -5,6 +5,7 @@
 	<title>South Park Hangman - OMG Don't Kill Kenny!</title>
 
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 
 </head>
 <body>
@@ -43,86 +44,88 @@
 -->
 
 <script type="text/javascript">
-	// Define variables
-	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Timmy"];
-	var currWord = [];
-	var wins = 0;
-	var userGuessCount = 12;
-	var userChoice = [];
+	
+$(document).ready(function() {
 
-	// On page load, set Computer Guess equal to a random choice from the compChoice array.
+	// Set Computer Guess equal to a random choice from the compChoice array.
+	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Timmy"];
+
 	var compGuess = compChoices[Math.floor(Math.random() * compChoices.length)];
 	console.log(compGuess);
+
 
 	// Break down compGuess into letters & display on screen
 	var currWord = compGuess.split("");
 	console.log(currWord);
-	
+
 	// Display compGuess letters in a horizontal line without commas
 	var currWordDivGet = document.getElementById("currWordDisplay");
-	console.log(currWordDivGet)
+	console.log(currWordDivGet);
 
-		for (var i = 0; i < currWord.length; i++) {
+	for (var i = 0; i < currWord.length; i++) {
 
-			var newElement = document.createElement("li");
+		var currWordParse = document.createElement("li");
 
-			newElement.innerHTML = currWord[i];
+		currWordParse.innerHTML = currWord[i];
 
-			currWordDivGet.appendChild(newElement)
-		}
-	
+		currWordDivGet.appendChild(currWordParse);
+	}
+
 	// Hide compGuess letters until guessed by user
 
 
 	// Define what happens when the user presses a key
-	document.onkeyup = function (event) {
+	var wins = 0;
+	var userGuessCount = 12;
+	var userChoice = [];
+
+
+	document.onkeyup = function (e) {
 	// Record key stroke pressed by user & convert to lower case
-		var userGuess = event.key.toUpperCase();
+		var userGuess = e.key.toUpperCase();
 		console.log(userGuess);
-		console.log(event);
+		console.log(e);
 
 	// Process key stroke from user to affect certain actions 
 	//if key pressed = a-z/A-Z && if key hasn't been pressed yet....
-		for (userChoice.indexOf(userGuess) === -1) {
-			if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123)) {	
-				// show each key pressed (as upper case letter) as userChoice in #game element
-				userChoice.push(userGuess);
-				console.log(userChoice);
-				console.log(currWord.indexOf(userGuess));
-
-			}
-
-
-			// if userGuess and compGuess match: 1) Decrease guesses left by 1; 2) Show letter on currWord
-			if (currWord.indexOf(userGuess) !== -1) {
-				// Decrease guesses left by 1
-				userGuessCount--;
-				console.log(userGuessCount);
-				//Show letter on screen in Current Word Section, in the correct location			
-
-			// if userGuess and compGuess don't match: 1) Decrease Guess Count by 1; 2)  List as letter guessed
-			} else if (currWord.indexOf(userGuess) === -1) {
-				// Decrease guesses left by 1
-				userGuessCount--;
-				console.log(userGuessCount);
-				//List as a letter guessed 
-				document.querySelector("#lettersGuessedP").innerHTML = userChoice;
-			}
-			// When all letters are revealed, 1) Increase wins by 1; 2) Reset Guess Count to 12; 3) Reset Letters Guessed to (blank)
-			if (userGuessCount === 0) {
-				wins++;
-				userGuessCount = 12;
-				userChoice = [];
-			}
-
-
-			//html resets
-			document.querySelector("#winP").innerHTML = wins;
-			document.querySelector("#guessesLeftP").innerHTML = userGuessCount;
+		if (((e.keyCode > 64 && e.keyCode < 91) || (e.keyCode > 96 && e.keyCode < 123)) && userChoice.indexOf(userGuess) === -1) {	
+			// show each key pressed (as upper case letter) as userChoice in #game element
+			userChoice.push(userGuess);
+			console.log(userChoice);
+			console.log(currWord.indexOf(userGuess));
 
 		}
-	}
 
+		// if userGuess and compGuess match: 1) Decrease guesses left by 1; 2) Show letter on currWord
+		if (currWord.indexOf(userGuess) !== -1) {
+			// Decrease guesses left by 1
+			userGuessCount--;
+			console.log(userGuessCount);
+			//Show letter on screen in Current Word Section, in the correct location			
+
+		// if userGuess and compGuess don't match: 1) Decrease Guess Count by 1; 2)  List as letter guessed
+		} else if (currWord.indexOf(userGuess) === -1) {
+			// Decrease guesses left by 1
+			userGuessCount--;
+			console.log(userGuessCount);
+			//List as a letter guessed 
+			document.querySelector("#lettersGuessedP").innerHTML = userChoice;
+		}
+		// When all letters are revealed, 1) Increase wins by 1; 2) Reset Guess Count to 12; 3) Reset Letters Guessed to (blank)
+		if (userGuessCount === 0) {
+			wins++;
+			userGuessCount = 12;
+			userChoice = [];
+		}
+
+
+		//html resets
+		document.querySelector("#winP").innerHTML = wins;
+		document.querySelector("#guessesLeftP").innerHTML = userGuessCount;
+
+
+	}
+});
 </script>
 
 

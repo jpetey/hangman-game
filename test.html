@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+	<title>South Park Hangman - OMG Don't Kill Kenny!</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+	<h1>South Park Hangman</h1>
+	<h2>(aka don't kill Kenny)</h2>
+	
+	<div id="intro">
+		<p>Press any key to begin!</p>
+	</div>
+
+	<div id="game">
+
+		<div id="winDiv">
+			<h4>Wins:</h4> 
+			<p id="winP"></p>
+		</div>
+		<div id="currWordContainer">
+			<h4>Current Word:</h4>
+			<ul id="currWordDisplay"></ul>
+		</div>
+		<div id="guessesLeftDiv">
+			<h4>Guesses Left:</h4>
+			<p id="guessesLeftP"></p>
+			</div>
+		<div id="lettersGuessedDiv">
+			<h4>Your guesses so far:</h4>
+			<p id="lettersGuessedP"></p>
+		</div>
+	</div>
+</div>
+
+<!-- MASTER P VIDEO
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cE1psVNPlx4" frameborder="0" allowfullscreen></iframe>
+-->
+
+<script type="text/javascript">
+	
+	// Define variables
+	var compChoices = ["Towlie", "Mr Hankey", "Cartman", "Chef", "Butters Scotch", "Stan Marsh", "Kyle Broflovski", "Ike Broflovski", "Kenny McCormick", "ManBearPig", "Timmy"];
+	var currWord = [];
+	var wins = 0;
+	var userGuessCount = 12;
+	var userChoice = [];
+
+	// On page load, set Computer Guess equal to a random choice from the compChoice array.
+	var compGuess = compChoices[Math.floor(Math.random() * compChoices.length)];
+	console.log(compGuess);
+
+	// Break down compGuess into letters & display on screen
+	var currWord = compGuess.split("");
+	console.log(currWord);
+	
+	// Display compGuess letters in a horizontal line without commas
+	var currWordDivGet = document.getElementById("currWordDisplay");
+	console.log(currWordDivGet);
+
+		for (var i = 0; i < currWord.length; i++) {
+
+			var newElement = document.createElement("li");
+
+			newElement.innerHTML = currWord[i];
+
+			currWordDivGet.appendChild(newElement);
+		}
+	
+	// Hide compGuess letters until guessed by user
+
+
+	// Define what happens when the user presses a key
+	document.onkeyup = function (event) {
+	// Record key stroke pressed by user & convert to lower case
+		var userGuess = event.key.toUpperCase();
+		console.log(userGuess);
+		console.log(event);
+
+
+		}
+	}
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+	<title>South Park Hangman - OMG Don't Kill Kenny!</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="assets/js/game.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+		<h1>South Park Hangman</h1>
+		<h2>(aka don't kill Kenny)</h2>
+		
+		<div id="intro">
+			<p>Press any key to begin!</p>
+		</div>
+
+		<div id="game">
+
+			<div id="winDiv">
+				<h4>Wins:</h4> 
+				<p id="winP"></p>
+			</div>
+			<div id="currWordContainer">
+				<h4>Current Word:</h4>
+				<ul id="currWordDisplay"></ul>
+			</div>
+			<div id="guessesLeftDiv">
+				<h4>Guesses Left:</h4>
+				<p id="guessesLeftP"></p>
+				</div>
+			<div id="lettersGuessedDiv">
+				<h4>Your guesses so far:</h4>
+				<p id="lettersGuessedP"></p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
